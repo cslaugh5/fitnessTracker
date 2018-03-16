@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css"/>
+    <title>Vue Todo</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Fitness Tracker</h1>
+      <form v-on:submit.prevent="addGoal">
+      	Enter your daily goal(min): <input type = "number" v-model="goal" step = "5" min = "5"></input>
+      	<button type="submit">Add</button>
+      </form>
+      <br>
+      <form v-on:submit.prevent="addItem">
+      	<select type="text" v-model="selected">
+		  <option disabled value="">Select Exercise: </option>
+		  <option>Running</option>
+		  <option>Biking</option>
+		  <option>Abs</option>
+		  <option>Weights</option>
+		</select>
+        Time (min): <input type="number" v-model="minutes" step="5" min="5"></input>
+        <button type="submit">Add</button>
+      </form>
+      <ul>
+	<li v-for="item in items" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
+	  <label>{{ item.selected }}: {{ item.minutes }} minutes</label>
+    <button v-on:click="upMinutes(item)">↑</button>
+    <button v-on:click="downMinutes(item)">↓</button>
+    <button v-on:click="deleteItem(item)" class="delete">❌</button>
+	</li>
+      </ul>
+    </div>
+    <h2>Summary</h2>
+    <ul>
+	    <li>Goal: {{ goal }}</li>
+	    <li>Total: {{ total }} </li>
+	    <li>Your Exercises: {{ exercises }} </li>
+	</ul>
+    <footer>
+ 		<a href="https://github.com/cslaugh5/fitnessTracker">GitHub</a>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js" integrity="sha256-pU9euBaEcVl8Gtg+FRYCtin2vKLN8sx5/4npZDmY2VA=" crossorigin="anonymous"></script>
+    <script src="/script.js"></script>
+  </body>
+</html>
