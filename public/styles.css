@@ -62,6 +62,7 @@ input[type=text] {
 
 button {
     font-family: 'Arvo';
+    color: #FFFFFF;
     font-size: 1em;
     background: #076645;
 }
@@ -84,7 +85,7 @@ footer{
 }
 
 footer a {
-    color: black;
+    color: #000000;
     text-decoration: none;
 }
 

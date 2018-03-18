@@ -3,43 +3,24 @@ var app = new Vue({
   data: {
     items: [],
     text: '',
-    minutes: '',
+    minutes:'',
     show: 'all',
     drag: {},
     selected: '',
     goal: '',
     total: '',
-    biking: false,
-    running: false,
-    abs: false,
-    weights: false,
     exercises: [],
   },
   created: function() {
     this.getItems();
     },
   computed: {
-    yourExercises: function() {
-      console.log(this.item.selected);
-      if (this.item.selected === "Biking") {
-        biking = true;
-      }
-      else if (this.item.selected === "Running") {
-        running = true;
-      }
-      else if (this.item.selected === "Abs") {
-        abs = true;
-      }
-      else if (item.selected === "Weights") {
-        weights = true;
-      }
-     //return exercises;
-    },
   },
   methods: {
      getItems: function() {
       axios.get("/api/items").then(response => {
         this.items = response.data;
+        this.addTotal();
         return true;
       }).catch(err => {
       });
@@ -53,31 +34,77 @@ var app = new Vue({
         this.text = "";
         this.selected = '';
         this.getItems();
+        this.addTotal();
+        //this.addExercises();
         return true;
       }).catch(err => {
       });
     },
-
     getGoal: function() {
-      axios.get("/api/goal").then(response => {
-        this.goal = response.data;
+      axios.get("/api/items/goal").then(response => {
+        this.goal = response.data.toString();
         return true;
       }).catch(err => {
       });
     },
     addGoal: function() {
-      axios.post("/api/goal", {
+      axios.post("/api/items/goal", {
         goal: this.goal,
       }).then(response => {
-        this.goal = "";
         this.getGoal();
         return true;
       }).catch(err => {
       });
     },
+    getTotal: function() {
+      axios.get("/api/items/total").then(response => {
+        this.total = response.data.toString();
+        return true;
+      }).catch(err => {
+      });
+    },
+    addTotal: function() {
+      axios.post("/api/items/total", {
+        total: '',
+      }).then(response => {
+        this.getTotal();
+        return true;
+      }).catch(err => {
+      });
+    },
+    /*
+    getExercises: function() {
+      axios.get("/api/items/exercises").then(response => {
+        this.exercises = response.data;
+        return true;
+      }).catch(err => {
+      });
+    },
+    addExercises: function() {
+      this.exercises = [];
+      axios.post("/api/items/exercises", {
+        running: this.running,
+        biking: this.biking,
+        abs: this.abs,
+        weights: this.weights,
+        exercises: this.exercises,
+      }).then(response => {
+        this.running = false;
+        this.biking = false;
+        this.abs = false;
+        this.weights = false;
+        this.getExercises();
+        return true;
+      }).catch(err => {
+      });
+    },
+    */
     deleteItem: function(item) {
+      this.addTotal();
       axios.delete("/api/items/" + item.id).then(response => {
         this.getItems();
+        this.addTotal();
+        //this.addExercises();
         return true;
       }).catch(err => {
       });
@@ -86,6 +113,7 @@ var app = new Vue({
       this.drag = item;
     },
     dropItem: function(item) {
+      this.addTotal();
       axios.put("/api/items/" + this.drag.id, {
         text: this.drag.text,
         minutes: this.drag.minutes,
@@ -98,27 +126,23 @@ var app = new Vue({
       }).catch(err => {
       });
     },
-    totalCalcualtion: function() {
-      axios.get("/api/items/total").then(response => {
-        this.total = response.data;
-        return true;
-      }).catch(err => {
-      });
-    },
     upMinutes: function(item) {
       item.minutes -= 5;
       item.minutes += 10;
+      this.addTotal();
       axios.put("/api/items/" + item.id, {
         text: item.text,
         minutes: item.minutes,
         selected: item.selected,
         orderChange: false,
       }).then(response => {
+        this.addTotal();
         return true;
       }).catch(err => {
       });
     },
     downMinutes: function(item) {
+      this.addTotal();
       if (item.minutes === 5) {
         item.minutes = 5;
       }
@@ -131,9 +155,12 @@ var app = new Vue({
         selected: item.selected,
         orderChange: false,
       }).then(response => {
+        this.addTotal();
         return true;
       }).catch(err => {
       });
     },
   },
 });
+
+

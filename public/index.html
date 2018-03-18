@@ -24,21 +24,20 @@
         Time (min): <input type="number" v-model="minutes" step="5" min="5"></input>
         <button type="submit">Add</button>
       </form>
+      <br>
       <ul>
-	<li v-for="item in items" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
-	  <label>{{ item.selected }}: {{ item.minutes }} minutes</label>
-    <button v-on:click="upMinutes(item)">↑</button>
-    <button v-on:click="downMinutes(item)">↓</button>
-    <button v-on:click="deleteItem(item)" class="delete">❌</button>
-	</li>
-      </ul>
-    </div>
-    <h2>Summary</h2>
-    <ul>
+      	<li v-for="item in items" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
+	 	 <label>{{ item.selected }}: {{ item.minutes }} minutes</label>
+		    <button v-on:click="upMinutes(item)">↑</button>
+		    <button v-on:click="downMinutes(item)">↓</button>
+		    <button v-on:click="deleteItem(item)" class="delete">❌</button>
+		</li>
+		<h2>Summary</h2>
 	    <li>Goal: {{ goal }}</li>
 	    <li>Total: {{ total }} </li>
-	    <li>Your Exercises: {{ exercises }} </li>
-	</ul>
+	    <li>Minutes Left: {{goal - total}}</li>
+	  </ul>
+	 </div>
     <footer>
  		<a href="https://github.com/cslaugh5/fitnessTracker">GitHub</a>
     </footer>
