@@ -9,7 +9,7 @@ app.use(express.static('public'))
 
 let items = [];
 let id = 0;
-let goal = '';
+let goal = 0;
 let total = '';
 //let exercises = [];
 

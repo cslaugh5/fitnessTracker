@@ -18,13 +18,14 @@ ul {
 }
 li {
     background: #08734E;
-    width: 500px;
+    min-width: 75%;
     min-height: 25px;
     padding: 10px;
-    
+
     font-size: 1em;
     max-height: 25px;
     display: flex;
+    white-space:nowrap;
     text-align: left;
     display: inline-block;
 }
